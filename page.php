@@ -24,7 +24,7 @@
 		'echo'             => 1 );
 	wp_link_pages( $args ); ?>
     </div><!-- [ /#post-<?php the_ID(); ?> ] -->
-
+    <?php comments_template( '', true ); ?>
 	<?php endwhile; ?>
 
 </main><!-- [ /.mainSection ] -->
