@@ -25,6 +25,8 @@ define( 'LIGHTNING_THEME_VERSION', $theme_opt->Version );
 /*-------------------------------------------*/
 /*	HOME _ Default content hidden
 /*-------------------------------------------*/
+/*	AMP
+/*-------------------------------------------*/
 
 /*-------------------------------------------*/
 /*	Theme setup
@@ -382,3 +384,63 @@ function lightning_home_content_hidden( $flag ){
  	}
  	return $flag;
 }
+
+
+/*-------------------------------------------*/
+/*	AMP
+/*-------------------------------------------*/
+
+// AMPページ設定用
+
+// フォントの設定
+function my_fonts( $data ) {
+	// Googleフォント Syncopate の設定を追加
+	$data[ 'font_urls' ][ 'syncopate' ] = 'https://fonts.googleapis.com/css?family=Syncopate:700';
+	// Font Awesomeのアイコンフォントの設定を追加
+	$data[ 'font_urls' ][ 'font-awesome' ] = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+	// Googleフォント merriweather の設定を削除
+	unset( $data[ 'font_urls' ][ 'merriweather'] );
+	return $data;
+}
+add_filter( 'amp_post_template_data', 'my_fonts' );
+
+// コンテンツの最大幅
+function my_maxwidth() {
+	global $content_width;
+	if ( is_amp_endpoint() ) {
+		$content_width  = 800;
+	}
+}
+
+add_action( 'template_redirect', 'my_maxwidth' );
+
+
+// カスタムメニュー
+register_nav_menu( 'ampnav', 'AMPページナビゲーションメニュー' );
+
+
+// 拡張ライブラリの追加
+function my_components( $data ) {
+	$data[ 'amp_component_scripts' ][ 'amp-lightbox' ] = 'https://cdn.ampproject.org/v0/amp-lightbox-0.1.js';
+	$data[ 'amp_component_scripts' ][ 'amp-social-share' ] = 'https://cdn.ampproject.org/v0/amp-social-share-0.1.js';
+	$data[ 'amp_component_scripts' ][ 'amp-carousel'] = 'https://cdn.ampproject.org/v0/amp-carousel-0.1.js';
+
+	if( in_category( '業務日記' ) ) {
+		$data[ 'amp_component_scripts' ][ 'amp-fit-text' ] = 'https://cdn.ampproject.org/v0/amp-fit-text-0.1.js';
+		$data[ 'amp_component_scripts' ][ 'amp-sidebar' ] = 'https://cdn.ampproject.org/v0/amp-sidebar-0.1.js';
+	}
+
+	return $data;
+}
+
+add_filter( 'amp_post_template_data', 'my_components' );
+
+
+// テンプレートの指定
+function my_temp( $file, $type, $post ) {
+	if( $type === 'single' && in_category( '業務日記', $post ) ) {
+		$file = dirname( __FILE__ ). '/amp/single-arrange.php';
+	}
+	return $file;
+}
+add_filter( 'amp_post_template_file', 'my_temp', 10, 3);
