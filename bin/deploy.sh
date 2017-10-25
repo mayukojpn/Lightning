@@ -4,8 +4,8 @@
 #     echo "Not deploying pull requests."
 #     exit
 # fi
- 
-if [[ "master" != "$TRAVIS_BRANCH" ]]; then
+
+if [[ "ci_error_test" != "$TRAVIS_BRANCH" ]]; then
     echo "Not on the 'master' branch."
     exit
 fi
