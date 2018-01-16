@@ -91,6 +91,11 @@ function lightning_theme_options_default(){
 /*-------------------------------------------*/
 /*	Head logo
 /*-------------------------------------------*/
+function lightning_customize_head_logo(){
+	$image = get_option( 'lightning_theme_options[head_logo]' );
+	return $image;
+}
+
 function lightning_print_headlogo() {
 	$options = get_option('lightning_theme_options');
 	if (isset($options['head_logo']) && $options['head_logo']){

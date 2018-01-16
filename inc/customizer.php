@@ -70,8 +70,14 @@ function lightning_customize_register($wp_customize)
 	) );
 	$wp_customize->selective_refresh->add_partial( 'lightning_theme_options[head_logo]', array(
 		'selector' => '.siteHeader_logo',
-		'render_callback' => '',
+		'render_callback' => 'lightning_customize_head_logo',
 	) );
+
+// function my_banner_render(  $partial = null, $id = '' ) {
+// 	$image = get_theme_mod( $partial->id );
+//
+// 	endif;
+// }
 
 
 	// color
