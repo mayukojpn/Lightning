@@ -1,14 +1,21 @@
 <?php get_header(); ?>
 
 <?php get_template_part( 'module_slide' ); ?>
-
+<?php
+	$lightning_theme_options = get_option( 'Lightning_theme_options' );
+	print '<pre style="text-align:left">こちらはとれない';
+	print_r( $lightning_theme_options );
+	print '</pre>';
+	?>
 <div class="section siteContent">
 	<div class="container">
 		<div class="row">
 
 			<?php
-			global $lightning_theme_options;
 			$lightning_theme_options = get_option( 'lightning_theme_options' );
+			print '<pre style="text-align:left">こちらは取れる';
+			print_r( $lightning_theme_options );
+			print '</pre>';
 			if (
 				isset( $lightning_theme_options['top_sidebar_hidden'] ) &&
 				$lightning_theme_options['top_sidebar_hidden'] ) {
